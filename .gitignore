@@ -1,0 +1,17 @@
+*.iws 
+.settings 
+*.log 
+plugin.xml 
+cobertura.ser 
+.DS_Store 
+/target 
+**/out/ 
+web-app/WEB-INF 
+/.link_to_grails_plugins/ 
+/target-eclipse/ 
+modules.xml 
+workspace.xml 
+uiDesigner.xml 
+misc.xml 
+plugin.xml *.iml wrapper/
+grails-phraseapp-*.*
