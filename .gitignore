@@ -13,5 +13,20 @@ modules.xml
 workspace.xml 
 uiDesigner.xml 
 misc.xml 
-plugin.xml *.iml wrapper/
+plugin.xml 
+*.iml 
+wrapper/
 grails-phraseapp-*.*
+# older plugin install locations
+/plugins
+/web-app/plugins
+# logs
+/stacktrace.log
+/test/reports
+/logs
+
+# project release file
+/*.war
+
+# plugin release files
+/*.zip
