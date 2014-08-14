@@ -6,12 +6,12 @@ import spock.lang.Specification
 /**
  * Created by tamer on 14/08/14.
  */
-class PhraseappResourceBlundleMessageSourceTest extends Specification {
+class PhraseappResourceBundleMessageSourceTest extends Specification {
 
 	@Shared
 	File tmp = File.createTempFile('spockTest', '')
 
-	PhraseappResourceBlundleMessageSource messageSource = new PhraseappResourceBlundleMessageSource()
+	PhraseappResourceBundleMessageSource messageSource = new PhraseappResourceBundleMessageSource()
 	def setup() {
 		ConfigObject configObject = new ConfigObject()
 		configObject.baseDir = tmp.getParent()

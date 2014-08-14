@@ -13,9 +13,9 @@ import org.codehaus.groovy.grails.context.support.PluginAwareResourceBundleMessa
 /**
  * Created by tamer on 27/07/14.
  */
-class PhraseappResourceBlundleMessageSource extends PluginAwareResourceBundleMessageSource {
+class PhraseappResourceBundleMessageSource extends PluginAwareResourceBundleMessageSource {
 
-	private static final Log LOG = LogFactory.getLog(PhraseappResourceBlundleMessageSource.class);
+	private static final Log LOG = LogFactory.getLog(PhraseappResourceBundleMessageSource.class);
 
 	void setPhConfiguration(ConfigObject phConfiguration) {
 		this.phConfiguration = phConfiguration
@@ -89,7 +89,7 @@ class PhraseappResourceBlundleMessageSource extends PluginAwareResourceBundleMes
 			File origin = new File(phConfiguration.baseDir)
 			destinationDirectory = snapshotDirByTimestamp(System.currentTimeMillis())
 			origin.eachFile(FileType.FILES) { File file ->
-				if (file?.name?.endsWith(PhraseappResourceBlundleMessageSource.STANDARD_EXTENTION)) {
+				if (file?.name?.endsWith(PhraseappResourceBundleMessageSource.STANDARD_EXTENTION)) {
 					FileUtils.copyFileToDirectory(file, destinationDirectory)
 				}
 			}
@@ -111,7 +111,7 @@ class PhraseappResourceBlundleMessageSource extends PluginAwareResourceBundleMes
 
 			if (snapshotDir?.canRead() && origin?.canWrite()) {
 				snapshotDir.eachFile(FileType.FILES) { File file ->
-					if (file?.name?.endsWith(PhraseappResourceBlundleMessageSource.STANDARD_EXTENTION)) {
+					if (file?.name?.endsWith(PhraseappResourceBundleMessageSource.STANDARD_EXTENTION)) {
 						FileUtils.copyFileToDirectory(file, origin)
 					}
 				}

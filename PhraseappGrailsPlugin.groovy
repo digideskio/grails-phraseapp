@@ -4,7 +4,7 @@ import org.codehaus.groovy.grails.context.support.PluginAwareResourceBundleMessa
 import org.codehaus.groovy.grails.web.context.GrailsConfigUtils
 import org.codehaus.groovy.grails.web.i18n.ParamsAwareLocaleChangeInterceptor
 import org.codehaus.groovy.grails.web.pages.GroovyPagesTemplateEngine
-import org.grails.plugin.phraseapp.PhraseappResourceBlundleMessageSource
+import org.grails.plugin.phraseapp.PhraseappResourceBundleMessageSource
 import org.springframework.web.context.support.ServletContextResourcePatternResolver
 import org.springframework.web.servlet.i18n.SessionLocaleResolver
 
@@ -54,7 +54,7 @@ class PhraseappGrailsPlugin {
 			servletContextResourceResolver(ServletContextResourcePatternResolver, ref('servletContext'))
 		}
 
-		messageSource(PhraseappResourceBlundleMessageSource) {
+		messageSource(PhraseappResourceBundleMessageSource) {
 			phConfiguration = phConfig
 			fallbackToSystemLocale = false
 			pluginManager = manager

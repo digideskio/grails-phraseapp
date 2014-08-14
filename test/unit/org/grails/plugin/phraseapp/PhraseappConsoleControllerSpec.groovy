@@ -18,7 +18,7 @@ class PhraseappConsoleControllerSpec extends Specification {
 
 	void "index method returns the list of snapshots"() {
 		given:
-			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			def messageSource = Mock(PhraseappResourceBundleMessageSource)
 			controller.messageSource = messageSource
 		when:
 			def model = controller.index()
@@ -30,7 +30,7 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "update redirects to index page with a message in the flash scope"() {
 		given:
-			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			def messageSource = Mock(PhraseappResourceBundleMessageSource)
 			controller.messageSource = messageSource
 		when:
 			controller.update()
@@ -48,7 +48,7 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "create redirects to index page with a message in the flash scope"() {
 		given:
-			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			def messageSource = Mock(PhraseappResourceBundleMessageSource)
 			controller.messageSource = messageSource
 		when:
 			controller.create()
@@ -66,7 +66,7 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "restore redirects to index page with a message in the flash scope"() {
 		given:
-			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			def messageSource = Mock(PhraseappResourceBundleMessageSource)
 			controller.messageSource = messageSource
 		when:
 			1  * messageSource.restoreSnapshot(1l) >> serviceResponse
@@ -85,7 +85,7 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "restore redirects to index page with a message in the flash.error scope if the id is not set"() {
 		given:
-			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			def messageSource = Mock(PhraseappResourceBundleMessageSource)
 			controller.messageSource = messageSource
 		when:
 			controller.params.id = id
@@ -104,7 +104,7 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "delete redirects to index page with a message in the flash scope"() {
 		given:
-			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			def messageSource = Mock(PhraseappResourceBundleMessageSource)
 			controller.messageSource = messageSource
 		when:
 			controller.params.id = 1l
@@ -123,7 +123,7 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "delete redirects to index page with a message in the flash.error scope if the id is not set"() {
 		given:
-			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			def messageSource = Mock(PhraseappResourceBundleMessageSource)
 			controller.messageSource = messageSource
 		when:
 			controller.params.id = id
