@@ -2,16 +2,16 @@ package org.grails.plugin.phraseapp
 
 class PhraseappConsoleController {
 
-	def phraseappService
+	def messageSource
 
 	def index() {
-		List<String> snapshots = phraseappService.snapshots
+		List<String> snapshots = messageSource.snapshots
 		[snapshots: snapshots]
 	}
 
 	//Todo: move all actions calls inside a form and use withForm{} in order to prevent double clicks
 	def create() {
-		if (phraseappService.createNewSnapshot()) {
+		if (messageSource.createNewSnapshot()) {
 			flash.message = 'Snapshot created'
 		} else {
 			flash.error = 'Error while creating the snapshot'
@@ -23,7 +23,7 @@ class PhraseappConsoleController {
 		if (!params.getLong('id')) {
 			flash.error = 'Missing or wrong id'
 		} else {
-			if (phraseappService.restoreSnapshot(params.getLong('id'))) {
+			if (messageSource.restoreSnapshot(params.getLong('id'))) {
 				flash.message = 'Snapshot restored'
 			} else {
 				flash.error = 'Error while restoring the snapshot'
@@ -36,7 +36,7 @@ class PhraseappConsoleController {
 		if (!params.getLong('id')) {
 			flash.error = 'Missing or wrong id'
 		} else {
-			if (phraseappService.deleteSnapshot(params.getLong('id'))) {
+			if (messageSource.deleteSnapshot(params.getLong('id'))) {
 				flash.message = 'Snapshot deleted'
 			} else {
 				flash.error = 'Error while deleting the snapshot'
@@ -46,7 +46,7 @@ class PhraseappConsoleController {
 	}
 
 	def update() {
-		if (phraseappService.update()) {
+		if (messageSource.update()) {
 			flash.message = 'Translations updated'
 		} else {
 			flash.error = 'Error while updating translations'

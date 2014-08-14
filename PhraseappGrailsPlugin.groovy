@@ -4,7 +4,7 @@ import org.codehaus.groovy.grails.context.support.PluginAwareResourceBundleMessa
 import org.codehaus.groovy.grails.web.context.GrailsConfigUtils
 import org.codehaus.groovy.grails.web.i18n.ParamsAwareLocaleChangeInterceptor
 import org.codehaus.groovy.grails.web.pages.GroovyPagesTemplateEngine
-import org.grails.plugin.phraseapp.PhraseappMessageSourceHelper
+import org.grails.plugin.phraseapp.PhraseappResourceBlundleMessageSource
 import org.springframework.web.context.support.ServletContextResourcePatternResolver
 import org.springframework.web.servlet.i18n.SessionLocaleResolver
 
@@ -28,21 +28,20 @@ class PhraseappGrailsPlugin {
 	def author = "Tamer Shahin "
 	def authorEmail = "tamer.shahin@gmail.com  "
 	def description = '''\
-	PhraseApp is an external tool really helpful for the translation of i18n labels. It got its own platform and utility
-	and it gives the possibility to download bundle file, one for each language you need to translate, that are ready
-	to be copied into grails-app/i18n/ folder.
+	PhraseApp is a web application really helpful for the translation of i18n labels. It gives support to a great number
+	of programming languages and frameworks. It got its own platform and utilities and it gives the possibility to
+	download bundle files, one for each language you need you application to be translated, that are
+	ready to be copied into grails-app/i18n/ folder.
 	The purpose of this plugin is to simplify the procedure: with one click the latest translations from all languages
 	are downloaded and uploaded right into the live application.
 	For more information please read the documentation.
 '''
 
-	// URL to the plugin's documentation
 	def documentation = "https://github.com/tamershahin/xxxx/blob/master/README.md"
 	def issueManagement = [system: "GITHUB", url: "https://github.com/tamershahin/xxx/issues"]
 	def scm = [url: "https://github.com/tamershahin/xxxxxxx"]
 
 	def license = "APACHE"
-
 
 	def doWithSpring = {
 
@@ -50,24 +49,13 @@ class PhraseappGrailsPlugin {
 		if (!phConfig) {
 			throw new Exception('Phraseapp Plugin config not found!')
 		}
-		if (!phConfig.baseDir.toString().endsWith('/')) {
-			phConfig.baseDir = phConfig.baseDir + '/'
-		}
-
-		// find i18n resource bundles and resolve basenames
-		//TODO : retrieve all tags to create the set of baseNames, working with messages file only
-		//TODO : handling plugins bundles (?)
-		Set baseNames = [phConfig.baseDir + 'messages']
-		PhraseappMessageSourceHelper.init(phConfig)
-
-		LOG.debug "Creating messageSource with basenames: $baseNames"
 
 		if (Environment.isWarDeployed()) {
 			servletContextResourceResolver(ServletContextResourcePatternResolver, ref('servletContext'))
 		}
 
-		messageSource(PluginAwareResourceBundleMessageSource) {
-			basenames = baseNames.toArray()
+		messageSource(PhraseappResourceBlundleMessageSource) {
+			phConfiguration = phConfig
 			fallbackToSystemLocale = false
 			pluginManager = manager
 			if (Environment.current.isReloadEnabled() || GrailsConfigUtils.isConfigTrue(application, GroovyPagesTemplateEngine.CONFIG_PROPERTY_GSP_ENABLE_RELOAD)) {
@@ -94,7 +82,8 @@ class PhraseappGrailsPlugin {
 		}
 
 		if (phConfig.reloadAtConfigChange) {
-			PhraseappMessageSourceHelper.reload(phConfig, event.ctx.messageSource)
+			event.ctx.messageSource.phConfiguration = phConfig
+			event.ctx.messageSource.update()
 		}
 	}
 

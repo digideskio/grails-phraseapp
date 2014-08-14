@@ -18,24 +18,24 @@ class PhraseappConsoleControllerSpec extends Specification {
 
 	void "index method returns the list of snapshots"() {
 		given:
-			def phraseappService = mockFor(PhraseappService)
-			phraseappService.demand.getSnapshots { -> ['1', '2', '3'] }
-			controller.phraseappService = phraseappService.createMock()
+			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			controller.messageSource = messageSource
 		when:
 			def model = controller.index()
 		then:
+			1  * messageSource.getSnapshots() >> ['1', '2', '3']
 			model.snapshots.size() > 0
 	}
 
 	@Unroll
 	void "update redirects to index page with a message in the flash scope"() {
 		given:
-			def phraseappService = mockFor(PhraseappService)
-			phraseappService.demand.update { -> serviceResponse }
-			controller.phraseappService = phraseappService.createMock()
+			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			controller.messageSource = messageSource
 		when:
 			controller.update()
 		then:
+			1  * messageSource.update() >> serviceResponse
 			response.redirectedUrl == '/phraseappConsole/index'
 			flash.message == flashMessage
 			flash.error == flashError
@@ -48,12 +48,12 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "create redirects to index page with a message in the flash scope"() {
 		given:
-			def phraseappService = mockFor(PhraseappService)
-			phraseappService.demand.createNewSnapshot { -> serviceResponse }
-			controller.phraseappService = phraseappService.createMock()
+			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			controller.messageSource = messageSource
 		when:
 			controller.create()
 		then:
+			1  * messageSource.createNewSnapshot() >> serviceResponse
 			response.redirectedUrl == '/phraseappConsole/index'
 			flash.message == flashMessage
 			flash.error == flashError
@@ -66,10 +66,10 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "restore redirects to index page with a message in the flash scope"() {
 		given:
-			def phraseappService = mockFor(PhraseappService)
-			phraseappService.demand.restoreSnapshot { Long timestamp -> serviceResponse }
-			controller.phraseappService = phraseappService.createMock()
+			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			controller.messageSource = messageSource
 		when:
+			1  * messageSource.restoreSnapshot(1l) >> serviceResponse
 			controller.params.id = 1l
 			controller.restore()
 		then:
@@ -85,13 +85,13 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "restore redirects to index page with a message in the flash.error scope if the id is not set"() {
 		given:
-			def phraseappService = mockFor(PhraseappService)
-			phraseappService.demand.restoreSnapshot(serviceCalls) { Long timestamp -> true }
-			controller.phraseappService = phraseappService.createMock()
+			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			controller.messageSource = messageSource
 		when:
 			controller.params.id = id
 			controller.restore()
 		then:
+			serviceCalls  * messageSource.restoreSnapshot(id) >> true
 			response.redirectedUrl == '/phraseappConsole/index'
 			flash.message == flashMessage
 			flash.error == flashError
@@ -104,13 +104,13 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "delete redirects to index page with a message in the flash scope"() {
 		given:
-			def phraseappService = mockFor(PhraseappService)
-			phraseappService.demand.deleteSnapshot { Long timestamp -> serviceResponse }
-			controller.phraseappService = phraseappService.createMock()
+			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			controller.messageSource = messageSource
 		when:
 			controller.params.id = 1l
 			controller.delete()
 		then:
+			1  * messageSource.deleteSnapshot(1l) >> serviceResponse
 			response.redirectedUrl == '/phraseappConsole/index'
 			flash.message == flashMessage
 			flash.error == flashError
@@ -123,13 +123,13 @@ class PhraseappConsoleControllerSpec extends Specification {
 	@Unroll
 	void "delete redirects to index page with a message in the flash.error scope if the id is not set"() {
 		given:
-			def phraseappService = mockFor(PhraseappService)
-			phraseappService.demand.deleteSnapshot(serviceCalls) { Long timestamp -> true }
-			controller.phraseappService = phraseappService.createMock()
+			def messageSource = Mock(PhraseappResourceBlundleMessageSource)
+			controller.messageSource = messageSource
 		when:
 			controller.params.id = id
 			controller.delete()
 		then:
+			serviceCalls  * messageSource.deleteSnapshot(id) >> true
 			response.redirectedUrl == '/phraseappConsole/index'
 			flash.message == flashMessage
 			flash.error == flashError
