@@ -12,6 +12,7 @@ grails.project.dependency.resolution = {
 	}
 
 	dependencies {
+//		test 'cglib:cglib-nodep:2.2' //workaround
 	}
 	plugins {
 		build(":release:3.0.1",
@@ -19,6 +20,7 @@ grails.project.dependency.resolution = {
 			export = false
 		}
 		compile ":rest:0.8"
+
 
 	}
 }
