@@ -1,6 +1,5 @@
 import grails.util.Environment
 import org.apache.commons.logging.LogFactory
-import org.codehaus.groovy.grails.context.support.PluginAwareResourceBundleMessageSource
 import org.codehaus.groovy.grails.web.context.GrailsConfigUtils
 import org.codehaus.groovy.grails.web.i18n.ParamsAwareLocaleChangeInterceptor
 import org.codehaus.groovy.grails.web.pages.GroovyPagesTemplateEngine
@@ -48,6 +47,14 @@ class PhraseappGrailsPlugin {
 		ConfigObject phConfig = application.config.grails?.plugin?.phraseapp
 		if (!phConfig) {
 			throw new Exception('Phraseapp Plugin config not found!')
+		}
+
+		if (!phConfig.baseDir.toString().endsWith('/')) {
+			phConfig.baseDir += '/'
+		}
+
+		if (!new File(phConfig.baseDir).canWrite()) {
+			throw new Exception("Cannot write files in: ${phConfig.baseDir}")
 		}
 
 		if (Environment.isWarDeployed()) {

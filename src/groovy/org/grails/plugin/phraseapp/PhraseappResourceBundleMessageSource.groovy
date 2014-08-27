@@ -19,10 +19,8 @@ class PhraseappResourceBundleMessageSource extends PluginAwareResourceBundleMess
 
 	void setPhConfiguration(ConfigObject phConfiguration) {
 		this.phConfiguration = phConfiguration
-		if (!phConfiguration.baseDir.toString().endsWith('/')) {
-			phConfiguration.baseDir = phConfiguration.baseDir + '/'
-		}
 	}
+
 	ConfigObject phConfiguration
 	final static String SCHEME = 'https'
 	final static String HOST = 'phraseapp.com'
@@ -49,13 +47,10 @@ class PhraseappResourceBundleMessageSource extends PluginAwareResourceBundleMess
 
 	void importAll() {
 		String authToken = phConfiguration.authToken
+
 		for (String locale in phConfiguration.locales) {
 
 			File currBundleFile = new File(phConfiguration.baseDir + "messages_" + locale.replace('-', '_') + STANDARD_EXTENTION)
-
-			if (!currBundleFile.getParentFile().canWrite()){
-				throw new Exception("Cannot write files in  ${currBundleFile.getParentFile().canonicalPath}")
-			}
 
 			HttpGet req = new HttpGet(new URI(SCHEME, null, HOST, 443, PATH + locale + STANDARD_EXTENTION, QUERY_AUTH + authToken, null))
 			HttpClient client = new DefaultHttpClient();
