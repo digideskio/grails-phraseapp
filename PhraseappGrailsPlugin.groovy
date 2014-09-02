@@ -12,9 +12,9 @@ class PhraseappGrailsPlugin {
 	private static LOG = LogFactory.getLog(this)
 
 	// the plugin version
-	def version = "0.1-SNAPSHOT"
+	def version = "0.1"
 	// the version or versions of Grails the plugin is designed for
-	def grailsVersion = "1.3 > *"
+	def grailsVersion = "2.0 > *"
 	// resources that are excluded from plugin packaging
 	def pluginExcludes = [
 			"grails-app/views/error.gsp"
@@ -29,16 +29,16 @@ class PhraseappGrailsPlugin {
 	def description = '''\
 	PhraseApp is a web application really helpful for the translation of i18n labels. It gives support to a great number
 	of programming languages and frameworks. It got its own platform and utilities and it gives the possibility to
-	download bundle files, one for each language you need you application to be translated, that are
+	download bundle files, one for each language you need your application to be translated, that are
 	ready to be copied into grails-app/i18n/ folder.
 	The purpose of this plugin is to simplify the procedure: with one click the latest translations from all languages
 	are downloaded and uploaded right into the live application.
 	For more information please read the documentation.
 '''
 
-	def documentation = "https://github.com/tamershahin/xxxx/blob/master/README.md"
-	def issueManagement = [system: "GITHUB", url: "https://github.com/tamershahin/xxx/issues"]
-	def scm = [url: "https://github.com/tamershahin/xxxxxxx"]
+	def documentation = "https://github.com/tamershahin/grails-phraseapp/blob/master/README.md"
+	def issueManagement = [system: "GITHUB", url: "https://github.com/tamershahin/grails-phraseapp/issues"]
+	def scm = [url: "https://github.com/tamershahin/grails-phraseapp"]
 
 	def license = "APACHE"
 
@@ -57,7 +57,7 @@ class PhraseappGrailsPlugin {
 			throw new Exception("Cannot write files in: ${phConfig.baseDir}")
 		}
 
-		if (Environment.isWarDeployed()) {
+		if (application.warDeployed) {
 			servletContextResourceResolver(ServletContextResourcePatternResolver, ref('servletContext'))
 		}
 
@@ -69,7 +69,7 @@ class PhraseappGrailsPlugin {
 				def cacheSecondsSetting = application?.flatConfig?.get('grails.i18n.cache.seconds')
 				cacheSeconds = cacheSecondsSetting == null ? 5 : cacheSecondsSetting as Integer
 			}
-			if (Environment.isWarDeployed()) {
+			if (application.warDeployed) {
 				resourceResolver = ref('servletContextResourceResolver')
 			}
 		}
