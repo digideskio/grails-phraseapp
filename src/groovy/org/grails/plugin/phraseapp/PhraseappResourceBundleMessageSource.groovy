@@ -55,8 +55,8 @@ class PhraseappResourceBundleMessageSource extends PluginAwareResourceBundleMess
 			HttpGet req = new HttpGet(new URI(SCHEME, null, HOST, 443, PATH + locale + STANDARD_EXTENTION, QUERY_AUTH + authToken, null))
 			HttpClient client = new DefaultHttpClient();
 			HttpResponse response = client.execute(req)
-			switch (response?.statusLine?.statusCode){
-				case 200 :
+			switch (response?.statusLine?.statusCode) {
+				case 200:
 					InputStream inputStream = response.getEntity().getContent()
 					FileUtils.copyInputStreamToFile(inputStream, currBundleFile)
 					break

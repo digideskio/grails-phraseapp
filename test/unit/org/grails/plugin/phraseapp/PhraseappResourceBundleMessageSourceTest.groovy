@@ -1,13 +1,12 @@
 package org.grails.plugin.phraseapp
 
 import org.apache.http.HttpVersion
+import org.apache.http.entity.BasicHttpEntity
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.message.BasicHttpResponse
 import org.apache.http.message.BasicStatusLine
-import spock.lang.IgnoreRest
 import spock.lang.Shared
 import spock.lang.Specification
-import spock.lang.Unroll
 
 /**
  * Created by tamer on 14/08/14.
@@ -28,41 +27,56 @@ class PhraseappResourceBundleMessageSourceTest extends Specification {
 	def cleanup() {
 	}
 
-	@Unroll
-	@IgnoreRest
-	def "importAll"() { // retrieve all bundle files using Phraseapp API and stores them in the configured path
+	def "importAll retrieves all bundle files using Phraseapp API and stores them in the configured path"() {
 		given:
+			def locales = ['en', 'it-IT', 'it', 'fr', 'de']
 			ConfigObject configObject = new ConfigObject()
 			configObject.baseDir = tmp.getParent()
 			configObject.authToken = 'xxxxxxxxxxxxxxxxxxxx'
-			configObject.locales = ['en', 'it-IT', 'it', 'fr', 'de']
+			configObject.locales = locales
 			messageSource.setPhConfiguration(configObject)
 
 		and:
-//			def mockFile = GroovyMock(File, global: true, useObjenesis: true)
-//			def mockResponse = new BasicHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, responseCode, null))
-			def mockClient = GroovyMock(DefaultHttpClient, global: true, useObjenesis: true) {
-				1 * execute(_) >> { new BasicHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, responseCode, null)) }
-//				consumeTimes * mockResponse.getEntity() >> { null }
-			}
+			def mockClient = GroovyMock(DefaultHttpClient, global: true, useObjenesis: true)
 
 		when:
 			messageSource.importAll()
 
 		then:
-			interaction {
-				1 * new File(_) >> { mockFile }
-				1 * new DefaultHttpClient() >> { mockClient }
+
+			locales.size() * new DefaultHttpClient() >> { mockClient }
+			locales.size() * mockClient.execute(_) >> {
+				def resp = new BasicHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, 200, null))
+				def entity = new BasicHttpEntity()
+				entity.setContent(new FileInputStream(File.createTempFile('fakeEntity', 'tmp')))
+				resp.setEntity(entity)
+				resp
 			}
-			if (execptionExpected) {
-				thrown(Exception)
-			}
-		where:
-			responseCode | execptionExpected | consumeTimes
-			401          | true              | 0
-			200          | false             | 1
+			notThrown(Exception)
 	}
 
+	def "importAll throws an exception if PhraseAPP respond with http status 401"() {
+		given:
+			def locales = ['en', 'it-IT', 'it', 'fr', 'de']
+			ConfigObject configObject = new ConfigObject()
+			configObject.baseDir = tmp.getParent()
+			configObject.authToken = 'xxxxxxxxxxxxxxxxxxxx'
+			configObject.locales = locales
+			messageSource.setPhConfiguration(configObject)
+
+		and:
+			def mockClient = GroovyMock(DefaultHttpClient, global: true, useObjenesis: true)
+
+		when:
+			messageSource.importAll()
+
+		then:
+			1 * new DefaultHttpClient() >> { mockClient }
+			1 * mockClient.execute(_) >> {
+				new BasicHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, 401, null))
+			}
+			thrown(Exception)
+	}
 
 	def "getSnapshotsBaseDirName returns the snapshots/ directory name or an exception if Phraseapp Plugin config not found"() {
 		when:
