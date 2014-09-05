@@ -5,7 +5,7 @@ PhraseApp.com is a tool that helps the process of translation of all kind of lab
 	It can process the .properties file used by Grails (i18n) and export them back in the same format. Phraseapp interface is 
 	really clear and powerful, it can handle essentially any known language.
 	The only problem is that those .properties file have to be manually copied into grails-app/i18n/ folder, once the 
-	translator complete his work. And this must be done for each language your website need to be translated in.
+	translator completes his work. And this must be done for each language your website need to be translated in.
 	Then you have to push the file in your VCS and finally deploy on production.
 	The purpose of this plugin is to simplify the procedure: with one click the latest translations from all languages
 	are downloaded and made available right into the live application.
