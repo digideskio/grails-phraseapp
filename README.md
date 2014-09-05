@@ -49,20 +49,12 @@ TODOs
 =====
 
 * in the console: [choose which lang to upload, update&snapshot, in dev mode checkbox to update bundles in VCS system]
-* in the helper: [choose which lang + which PA tag + keys white and black lists]
+* handle the propagation of changes to .properties files in all (eventual) production servers 
+* in the custom messageSource bean: [choose which lang + which PhraseApp tag + keys white and black lists]
 * plugin install script to update application config.groovy
 * ideas appreciated
 
 Credits
 =======
 
-love you mom.
 
-[redis-cache-plugin]: http://www.grails.org/plugin/cache-redis
-[redis-plugin]: http://www.grails.org/plugin/redis
-[redis-plugin-example]: https://github.com/grails-plugins/grails-redis#memoization-annotation-keys
-[cache-plugin]: http://www.grails.org/plugin/cache
-[redis]: http://redis.io
-[jedis]: https://github.com/xetorthio/jedis/wiki
-[GameTube]: http://www.gametube.org/
-[guide on groovy AST]: http://www.christianoestreich.com/2012/02/groovy-ast-transformations-part-1/
