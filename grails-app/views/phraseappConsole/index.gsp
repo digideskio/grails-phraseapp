@@ -43,7 +43,7 @@
 
 <div id="restoreSnapshot">
     <g:if test="${snapshots}">
-        These are the Snapshot taken so far:
+        These are the Snapshots taken so far:
         <ul>
             <g:each in="${snapshots}" var="item">
                 <li>Snapshot created at ${new Date(item as Long)}
@@ -58,7 +58,7 @@
         </ul>
     </g:if>
     <g:else>
-        No Snapshot available.
+        No Snapshots available.
     </g:else>
 </div>
 
