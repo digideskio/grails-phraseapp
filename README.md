@@ -71,6 +71,6 @@ Credits
 =======
 
 Thanks to German for it's review and the Grails community.
-Are you using the plugin, please consider writing you opionions and requests.
+If you are using the plugin, please consider writing you opionions and requests.
 
 
