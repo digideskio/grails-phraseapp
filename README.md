@@ -43,11 +43,11 @@ The plugin can be used throuhgt a console that can be found at this url:
 *Attention: the whole Controller is not secured in any way! be sure to enable the access to this page only to Admins.*
 
 In this very simple console you can find:
-* a 'Downlaod' link that triggers the *download* of the latest saved translations from phraseapp, saves them on local file system, and updates all keys in the current server. The old version of each bundle file will be overwritten.
-* a 'Create' link that triggers the *creation* of the current situation *snapshot*. Something can go wrong at any time: It's usefull to have a save-point where you are sure that all translations were correct. This operation creates a copy of all bundle files present in the configured folder into a subfolder.
+* a 'Download' link that triggers the *download* of the latest saved translations from phraseapp, saves them on local file system, and updates all keys in the current server. The old version of each bundle file will be overwritten.
+* a 'Create' link that triggers the *creation* of a *snapshot* containing the current state of translations. Since something can go wrong at any time, it's useful to have a save-point where you are sure that all translations were correct. This operation creates a copy of all bundle files present in the configured folder into a subfolder.
 
-Then you got the list of all snapshots previously created, on which you can trigger these two operations:
-* 'Restore' a specific snapshot: like a time machine. All files present when the snapshot was created will replace the current ones. If you added another language to the list after the creation of the snapshot it will not be replaced. The snapshot will *not* be deleted after this operation.
+Then you have the list of all snapshots previously created, on which you can trigger these two operations:
+* 'Restore' a specific snapshot: like a time machine. All files present when the snapshot was created will replace the current ones. If you added another language to the list after the creation of the snapshot it will *not* be replaced. The snapshot will *not* be deleted after this operation.
 * 'Delete' a specific snapshot: when it's time to recover some space from the disk.
 
 
@@ -70,7 +70,7 @@ TODOs
 Credits
 =======
 
-Thanks to German for it's review and the Grails community.
+Thanks to Germán for his review and the Grails community.
 If you are using the plugin, please consider writing you opionions and requests.
 
 
